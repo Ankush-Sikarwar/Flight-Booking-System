@@ -62,8 +62,6 @@ Frontend:
 Backend: 
 * Django (Python), SQL Lite, Django ORM
 
-Deployment: 
-* Docker, Nginx & Gunicorn, AWS
 
 Version Control: 
 * Git
@@ -99,14 +97,9 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-or
 
-4. Follow these steps using the Docker
 
-```docker
-docker-compose build
-docker-compose up
-```
+
 
 ## Usage
 
