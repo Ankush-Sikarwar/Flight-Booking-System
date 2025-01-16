@@ -204,5 +204,5 @@ Real-time tracking of the status of current bookings and cancelling the bookings
 
 ## Authors
 
-* **Anup Kumar Mridha** - *MCA Student* - [Ankush Sikarwar](https://github.com/Ankush-sikarwar)
+* **Ankush Sikarwar** - *MCA Student* - [Ankush Sikarwar](https://github.com/Ankush-sikarwar)
 
