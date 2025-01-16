@@ -1,0 +1,145 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+{% if user.is_authenticated %}
+<div class="container-fluid bg-white my-5 p-5px" id="add-prod-css">
+  <div class="row justify-content-center">
+    <div class="mt-2">
+      <h4 class="text-center">Flight Booking System</h4>
+      <h4>
+        <div class="text-center">
+          <a href="{% url 'all_schedules' route.pk %}" class="btn btn-primary"
+            >Back to All Schedules</a
+          >
+        </div>
+      </h4>
+
+      <form method="post" action="{% url 'booking' route.pk schedule.pk %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>Source Location</label>
+          <input
+            class="form-control"
+            id="source_location"
+            name="source_location"
+            value={{route.departure_location}}
+            readonly="true"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Destination Location </label>
+          <input
+            class="form-control"
+            id="destination_location"
+            name="destination_location"
+            value={{route.arrival_location}}
+            readonly="true"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Total Distance </label>
+          <input
+            class="form-control"
+            id="distance"
+            name="distance"
+            value={{route.distance}}
+            readonly="true"
+            required
+          />
+        </div>
+      
+
+        
+
+        <div class="form-group">
+          <select name="seat_ids" class="custom-select" multiple required>
+            <option selected>Select Your Seat</option>
+            {% for seat in allSeats|dictsort:"flight_class" %}
+            <option value="{{seat.pk}}">
+              {{seat.seat_number}} - {{seat.price}} - {{seat.flight_class}} - {{ seat.category }}  
+            </option>
+            <span class="visually-hidden" id="seat-price" value="{{seat.price}}"></span>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Total Price: </label>
+          <input
+            type="number"
+            class="form-control"
+            id="total_price"
+            name="total_price"
+            value=""
+            readonly="true"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="travel_date">Travel Date</label>
+          <input
+            type="date"
+            class="form-control"
+            name="travel_date"
+            value="{{ schedule.source_departure_datetime|date:'Y-m-d' }}"
+            id="travel_date"
+            required
+            readonly
+          />
+        </div>
+        <div class="text-center pb-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% else %}
+
+<button
+  type="button"
+  class="btn btn-outline-success btn-sm mx-1"
+  data-bs-toggle="modal"
+  data-bs-target="#loginModal"
+>
+  Book Now
+</button>
+{% endif %}
+
+<script>
+  
+  const seatSelect = document.querySelector('select[name="seat_ids"]');
+  const totalPriceInput = document.getElementById("total_price");
+  const totalDistance = document.getElementById("distance").value;
+  // const seatPrice = document.getElementById("seat-price").value;
+  // console.log(seatPrice);
+  // console.log(totalDistance);
+  seatSelect.addEventListener("change", calculateTotalPrice);
+
+  function calculateTotalPrice() {
+    const pricePerKm = 5;
+    let totalPrice = totalDistance * pricePerKm;
+
+    // Get the number of selected seats and calculate the final price
+    const selectedSeats = document.querySelectorAll('select[name="seat_ids"] option:checked');
+    // console.log("Selected seats ",selectedSeats);
+
+    const numSeats = selectedSeats.length;
+    for(let i = 0; i < numSeats; i++){
+      const selectedSeatPrice = parseInt(selectedSeats[i].textContent.split(" - ")[1]);
+      totalPrice += selectedSeatPrice;
+      console.log("selectedSeatPrice ", selectedSeatPrice);
+      console.log("totalPrice ", totalPrice);
+    }
+    // const selectedSeatPrice = selectedSeats[0];
+    const seatPrice = 5;
+    totalPrice += numSeats * seatPrice;
+
+    // Set the total price input value
+    totalPriceInput.value = Math.abs(totalPrice);
+  }
+</script>
+
+
+{% endblock body %}

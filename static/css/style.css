@@ -1,0 +1,304 @@
+:root {
+    --cerulean: #4484ce;
+    --aluminium: #FFFFFA;
+    --light: #f9cf00;
+    --tangerine: #f19f4d;
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: var(--aluminium);
+    overflow: visible !important;
+}
+
+.navbar {
+    background-color: var(--aluminium);
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    position: relative;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: black;
+    transition: all 0.5s ease-out;
+    background-color: rgba(241, 159, 77, 0);
+    border-radius: 4rem;
+
+}
+
+
+
+/* Button animation */
+.btn:focus,
+.btn:hover {
+    color: #0a58ca;
+}
+
+.cardcss {
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.cardcss img {
+    height: 12rem;
+    border-radius: 2rem;
+    width: auto;
+}
+
+#add-prod-css {
+    border-radius: 2rem;
+    width: 50%;
+}
+
+#cke_id_desc {
+    width: 30rem;
+}
+
+.active {
+    background-color: var(--tangerine);
+    border-radius: 3rem;
+}
+
+.profile-item-label {
+    font-weight: bold;
+}
+
+.profile-item-content {
+    color: #333;
+}
+
+@media only screen and (max-width: 922px) {
+    #add-prod-css {
+        width: 95%;
+        margin: 0.5rem;
+        padding: 0rem;
+    }
+}
+
+#add-prod {
+    text-decoration: none;
+    border: 3px solid #f9cf00;
+    background-color: #f9cf00;
+    font-size: 2rem;
+    color: white;
+    border-radius: 5rem;
+    transition: all 0.8s;
+}
+
+#add-prod:hover {
+    border: 3px solid #f9cf00;
+    color: #f9cf00;
+    background-color: white;
+}
+
+#bid-prod {
+    text-decoration: none;
+    background-color: #f19f4d;
+    border: 3px solid #f19f4d;
+    color: white;
+    font-size: 2rem;
+    border-radius: 5rem;
+    transition: all 0.8s;
+}
+
+#bid-prod:hover {
+    border: 3px solid #f19f4d;
+    color: #f19f4d;
+    background-color: white;
+}
+
+.compL {
+    animation: fadeInDown 4s;
+}
+
+.land-form {
+    animation: fadeInUp 3s;
+}
+
+/* Log in list */
+.list-group-item {
+    border: none;
+    padding: 0.3rem 0;
+}
+
+.login-links {
+    text-decoration: none;
+}
+
+.login-links:hover {
+    text-decoration: none;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0.3;
+        transform: translatey(-20rem);
+    }
+
+    /* 50%{
+        opacity: 0.9;
+        transform: translatey(-13rem);
+    } */
+    100% {
+        opacity: 1;
+        transform: translatey(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translatey(5rem);
+    }
+
+    /* 50%{
+        opacity: 0.9;
+        transform: translatey(-13rem);
+    } */
+    100% {
+        opacity: 1;
+        transform: translatey(0);
+    }
+}
+
+.offcanvas-start {
+    width: 230px;
+}
+
+.offcanvas-header {
+    justify-content: center;
+}
+
+.sidenav-list {
+    list-style: none;
+    text-align: left;
+    padding-left: 0;
+}
+
+.sidenav-list-item {
+    text-decoration: none;
+    padding: 1rem 0;
+}
+
+.dash-link {
+    text-decoration: none;
+    color: black;
+}
+
+.dash-link:hover {
+    text-decoration: none;
+}
+
+.main-container {
+    position: relative;
+    float: right;
+    width: calc(100% - 230px);
+}
+
+/* Profile Styling */
+.profile-wrapper {
+    padding: 2rem;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-img {
+    height: 100px;
+    max-width: 100%;
+    border-radius: 0.1875rem;
+}
+
+.profile-details {
+    margin-top: 2rem;
+}
+
+.detail-wrapper {
+    padding: 2rem;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.login-btns {
+    list-style: none;
+    text-align: left;
+    padding-left: 0;
+}
+
+.login-btns-items {
+    text-decoration: none;
+    padding: 1rem 0;
+}
+
+.profile-options {
+    display: flex;
+    flex-direction: column;
+}
+
+div.sw-toolbar-elm.toolbar.toolbar-bottom {
+    margin-top: 1rem;
+}
+
+.btn.btn-primary.form-submit {
+    background-color: #009ef7;
+    border: none;
+}
+
+.btn.btn-primary.form-submit:hover {
+    color: white;
+}
+
+.custom {
+    width: 230px;
+    top: 0;
+    left: 0;
+    border-right: 1px solid rgba(0, 0, 0, .2);
+    position: fixed;
+    bottom: 0;
+    z-index: 1045;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    background-color: #fff;
+    background-clip: padding-box;
+    outline: 0;
+    transition: transform .3s ease-in-out;
+}
+
+.custom-header {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1rem;
+}
+
+.custom-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.custom-body {
+    flex-grow: 1;
+    padding: 1rem 1rem;
+    overflow-y: auto;
+}
+
+.profile-options button:hover {
+    color: white;
+}
+
+.profile-options button:focus {
+    color: white;
+}

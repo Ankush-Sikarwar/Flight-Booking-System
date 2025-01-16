@@ -1,0 +1,113 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+{% if user.is_authenticated %}
+<div class="container mt-5">
+  <h1 class="mb-4">Payment Confirmation</h1>
+  <div class="card p-4">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group mb-3">
+        <label for="method">Schedule - {{book.schedule}}</label>
+      </br>
+        <label for="method">Source Location - {{book.source_location.location}}</label>
+      </br>
+        <label for="method">Destination Location - {{book.destination_location.location}}</label>
+      </br>
+        <label for="method">Total Seat = {{book.total_seats}} - {% for seat in book.seats.all %} ( SNO - {{seat.seat_number}} - {{seat.category}} ),
+            {% endfor %}</label>
+      </br>
+        <label for="method">Amount - {{book.amount}}</label>
+      </br>
+        <label for="method">Payment Method</label>
+        <select class="form-control" id="method" name="method" required>
+          <option value="" selected disabled>Select Payment Method</option>
+          {% for method in method_choices %}
+          <option value="{{ method.0 }}">{{ method.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group mb-3" id="upi-id-field" style="display: none">
+        <label for="upi-id">UPI ID</label>
+        <input
+          type="text"
+          class="form-control"
+          id="upi-id"
+          name="upi_id"
+          placeholder="Enter UPI ID"
+        />
+      </div>
+
+      <div class="form-group mb-3" id="card-fields" style="display: none">
+        <label for="card-holder-name">Cardholder Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="card-holder-name"
+          name="card_holder_name"
+          placeholder="Enter name as on card"
+        />
+
+        <label for="card-number">Card Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="card-number"
+          name="card_number"
+          placeholder="Enter card number"
+        />
+
+        <label for="expiry-date">Expiry Date</label>
+        <input
+          type="text"
+          class="form-control"
+          id="expiry-date"
+          name="expiry_date"
+          placeholder="MM/YY"
+        />
+
+        <label for="cvv">CVV</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cvv"
+          name="cvv"
+          placeholder="Enter CVV"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-4">
+        Confirm Payment
+      </button>
+    </form>
+  </div>
+</div>
+{% else %}
+<p class="text-center p-5 m-5">
+  404 Not Found please
+  <button
+  type="button"
+  class="btn btn-outline-success btn-sm mx-1"
+  data-bs-toggle="modal"
+  data-bs-target="#loginModal"
+>
+  Login
+</button>
+</p>
+{% endif %} 
+
+<script>
+  var methodSelect = document.getElementById("method");
+  var upiIdField = document.getElementById("upi-id-field");
+  var cardFields = document.getElementById("card-fields");
+
+  methodSelect.addEventListener("change", function () {
+    if (this.value === "upi") {
+      upiIdField.style.display = "block";
+      cardFields.style.display = "none";
+    } else {
+      upiIdField.style.display = "none";
+      cardFields.style.display = "block";
+    }
+  });
+</script>
+{% endblock %}

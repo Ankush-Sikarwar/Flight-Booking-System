@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% load static %}
+{% block title %} Profile {% endblock title %} {% block body %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Profile</h3>
+          {% comment %}
+          <img
+            src="{% static 'images/profile-pic.jpg' %}"
+            class="rounded-circle mx-auto d-block mb-3"
+            alt="Profile Picture"
+            width="150"
+            height="150"
+          />
+          {% endcomment %}
+          <h5 class="text-center">{{user.first_name}} {{user.last_name}}</h5>
+          <p class="text-center mb-5">{{user.email}}</p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Username:</strong> {{user.username}}
+            </li>
+            <li class="list-group-item">
+              <strong>Member Since:</strong> {{user.date_joined}}
+            </li>
+            <li class="list-group-item">
+              <strong>Phone Number:</strong> {{user.phone_number}}
+            </li>
+          </ul>
+          <a
+            href="{% url 'edit_profile' %}"
+            class="btn btn-primary btn-block mt-5"
+            >Edit Profile</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

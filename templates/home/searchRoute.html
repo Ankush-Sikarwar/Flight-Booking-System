@@ -1,0 +1,20 @@
+{% load static %} 
+<head>
+<link rel="stylesheet" href="{% static "css/filter.css" %}" />
+  </head>
+  <div class="main-container">
+  <form class="row gy-2 gx-3 justify-content-center" action="{% url 'all_routes' %}">
+    <div class="col-auto input-group">
+      <input type="text" class="visually-hidden" name="q" value="{{ query }}">
+      <input type="text" aria-label="From" class="form-control" name="source_location" value="{{ source_location }}" placeholder="From">
+      <span class="span-center mx-2">&#8644;</span>
+      <input type="text" aria-label="To" class="form-control" name="destination_location" value="{{ destination_location }}" placeholder="To">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+</div>
+
+</div>
+    <script type="text/javascript" src="{% static "js/filter.js" %}"></script> 

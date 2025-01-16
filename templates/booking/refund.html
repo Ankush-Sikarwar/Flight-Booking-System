@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block body %}
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4>Payment Refund</h4>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-success">
+            <h5>Your booking has been cancelled and a refund has been initiated.</h5>
+<p>Thank you for choosing our service. Your refund will be processed within 7-10 business days.</p>
+            <p>
+              Your refund amount of ${{ payment.amount }}
+              has been successfully processed.
+            </p>
+            <p>Your payment account Details is.</p>
+            <p> Bank Name - {{ bank_name }}.</p>
+            <p> Account No - {{ account_number }}.</p>
+            <p> IFSC CODE - {{ ifsc_code }}.</p>
+
+            <p>You will receive a confirmation email shortly.</p>
+          </div>
+          <div class="text-center">
+            <a href="{% url 'homeView' %}" class="btn btn-primary"
+              >Back to Home</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

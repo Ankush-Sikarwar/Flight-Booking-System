@@ -1,0 +1,142 @@
+{% load static %}
+<style>
+  .notification {
+    background-color: #0d6efd;
+    color: white;
+    text-decoration: none;
+    padding: 4px 0px;
+    margin-right: 20px;
+    margin-left: 20px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+    font-size: 20px;
+  }
+
+  .notification:hover {
+    background: #0b5ed7;
+    color: #fff;
+  }
+
+  .notification .badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 8px 8px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+  }
+
+  .notification-section .dropdown-toggle::after {
+    content: none;
+  }
+
+  .dropdown-toggle::after {
+    color: #fff;
+  }
+
+  #notifications-dropdown li {
+    max-width: 500px;
+    word-wrap: break-word;
+    display: inline-block;
+    white-space: normal;
+  }
+
+  #notifications-dropdown.dropdown-menu {
+    width: 15rem;
+  }
+</style>
+<!-- -----------------------------------Navbar start----------------------------------- -->
+<nav class="navbar navbar-expand-lg mb-2 fixed-top">
+  <div class="container-fluid d-flex">
+    <a class="navbar-brand text-dark flex-grow-1 flex-shrink-1" href="/"
+      ><strong>Flight Booking System</strong></a
+    >
+    <button
+      class="navbar-toggler border-dark"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav ms-auto flex-wrap">
+        <li class="nav-item">
+          <a class="nav-link px-0" href="#">Reservation Policy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-0" href="#">Contact Us</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown notification-section mx-0">
+          <a
+            href="/notification/show_user_notifications"
+            class="notification dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="true"
+          >
+            <span><i class="bi bi-bell-fill"></i></span>
+            <span class="badge" id="notification-badge">{{ count }}</span>
+          </a>
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="navbarDropdown"
+            id="notifications-dropdown"
+            data-popper-placement="bottom-end"
+            style="
+              position: absolute;
+              inset: 0px auto auto 0px;
+              margin: 0px;
+              transform: translate3d(-70px, 42px, 0px);
+            "
+          ></ul>
+        </li>
+      </ul>
+      {% endif %}
+
+      {% comment %} <form class="d-flex" action="{% url 'search' %}" method="GET">
+        <input
+          id="search-input"
+          class="form-control me-2 mt-3"
+          type="search"
+          name="q"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button
+          class="btn btn-outline-success h-45px mt-1"
+          id="search-button"
+          type="submit"
+        >
+          Search
+        </button>
+      </form> {% endcomment %}
+
+      <!-- {% comment %} login signup {% endcomment %} -->
+    </div>
+  </div>
+</nav>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ <script>
+  $(document).ready(function () {
+    $(".notification").click(function () {
+      $.ajax({
+        url: "{% url 'show_user_notifications' %}",
+        success: function (response) {
+          $("#notifications-dropdown").html(response);
+          var count = $("#notifications-dropdown li").length;
+          $("#notification-badge").text(count).show();
+        },
+      });
+    });
+  });
+</script>

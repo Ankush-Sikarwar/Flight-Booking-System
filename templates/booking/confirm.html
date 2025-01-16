@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% load static %} {% block body %} 
+{% if user.is_authenticated %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4>Payment Confirmation</h4>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-success">
+            <h5>Thank you for your payment!</h5>
+            <p>
+              Your payment of ${{ book.amount }} using {{ payment.method }} has
+              been successfully processed.
+            </p>
+            <p>Your booking ID is {{ book.pk }}.</p>
+            <p>You will receive a confirmation email shortly.</p>
+          </div>
+          <div class="text-center">
+            <a href="{% url 'homeView' %}" class="btn btn-primary"
+              >Back to Home</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+
+<p class="text-center p-5 m-5">
+  404 Not Found please
+  <button
+  type="button"
+  class="btn btn-outline-success btn-sm mx-1"
+  data-bs-toggle="modal"
+  data-bs-target="#loginModal"
+>
+  Login
+</button>
+</p>
+{% endif %} 
+{% endblock body %}

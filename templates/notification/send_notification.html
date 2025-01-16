@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Notification</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row mt-5 justify-content-center">
+      <div class="col-4">
+        <br>
+        <label for="username" class="from-level">Username</label>
+        <input type="text" id="username" class="from-control"><br>
+      </div>
+      <button class="btn btn-primary mt-2" id="send-notification">Send</button>
+    </div>
+
+  </div>
+  <div class="row mt-5 justify-content-center">
+    <div class="col4">
+      <p id="log"></p>
+    </div>
+  </div>
+  </div>
+
+
+  <script>
+    const notificationSocket = new WebSocket(
+      "ws://" + window.location.host + "/ws/notifications/"
+    );
+
+    notificationSocket.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      console.log(data.message);
+      // alert(data.message);
+      document.querySelector('#log').innerHTML += (data.message + '<br>');
+    };
+
+    notificationSocket.onclose = function (event) {
+      console.log("chat socket closed unexpectedly");
+    }
+
+    document.querySelector("#send-notification").onclick = function (e) {
+      // const messageInputDom = document.querySelector("#notification-message");
+      const username = document.querySelector("#username");
+      const message = username.value + 'cliked the button!';
+      // messageInputDom.value = "";
+      notificationSocket.send(
+        JSON.stringify({
+          message: message,
+        })
+      );
+    };
+  </script>
+
+</body>
+
+</html>

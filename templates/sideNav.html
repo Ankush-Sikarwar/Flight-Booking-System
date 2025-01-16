@@ -1,0 +1,58 @@
+<div class="custom">
+  <div class="custom-header">
+    <h5 class="custom-title" id="offcanvasLabel">{{ user.username }}</h5>
+  </div>
+  <div class="custom-body">
+
+      {% if user.is_authenticated %}
+     
+      <ul class="sidenav-list">
+
+        <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "{% url 'profile' %}" class="dash-link">Profile</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-journal-arrow-up"></i> <a href= "{% url 'allBookings' %}" class="dash-link">Bookings</a></li>
+        {% if user.is_superuser %}
+        <li class="sidenav-list-item"><i class="bi bi-list-ul"></i> <a href="{% url 'admin:login' %}" class="dash-link">Admin Portal</a></li>
+        {% endif %}     
+        <li class="sidenav-list-item"><i class="bi bi-key-fill"></i> <a href="{% url 'password_change' %}" class="dash-link">Change Password</a>   </li>
+        <li class="sidenav-list-item"><i class="bi bi-arrow-down-up"></i> <a href= "{% url 'all_routes' %}" class="dash-link">All Routes</a></li>
+        <ul class="login-btns">
+          <li class="sidenav-list-item"> <a class="dash-link">
+            <form action='{% url 'handleLogout' %}' method='post'>
+              {% csrf_token %}
+              <div class="form-group">
+                  <input type="hidden" name="value">
+              </div>
+
+              <button class="dropdown-item" type="submit"><i class="bi bi-power" style="margin-right:10px;"></i>Logout</button>
+          </form>
+          </a></li>
+        </ul>
+      </ul>
+      {% else %}
+      <!-- Button to trigger login modal -->
+      <ul class="login-btns">
+        <li class="login-btns-items">
+          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#loginModal">
+            Login
+          </button>
+        </li>
+        
+        <!-- Button to trigger singup modal -->
+        <li class="login-btns-items">
+          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#signupModal">
+            Sign up
+          </button>
+        </li>
+        
+      </ul>
+
+      <ul>
+        <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "{% url 'all_routes' %}" class="dash-link">All Routes</a></li>
+      </ul>
+      {% comment %} <a class="nav-link" type="button" class="btn btn-danger mr-2"
+        href="{% url 'register' %}">Register</a> {% endcomment %}
+      {% endif %}
+
+      
+  </div>
+</div>

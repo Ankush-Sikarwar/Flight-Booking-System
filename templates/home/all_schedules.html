@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<div class="container my-3">
+  <h2>All Schedules on {{ route }}</h2>
+  <h4>
+    <div class="text-center">
+      <a href="{% url 'all_routes' %}" class="btn btn-primary"
+        >Back to All Routes</a
+      >
+    </div>
+  </h4>
+  {% if AllSchedules %}
+  <table class="table">
+    <tbody>
+      <thead>
+        <tr>
+          <th scope="col">sno</th>
+          <th scope="col">Flight</th>
+          <th scope="col">Book</th>
+          <th scope="col">Available Seat</th>
+          <th scope="col">departure_location</th>
+          <th scope="col">arrival_location</th>
+          <th scope="col">departure_time</th>
+          <th scope="col">arrival_time</th>
+        </tr>
+      </thead>
+      {% for schedule in AllSchedules %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{schedule.flight}}</td>
+
+        <td>
+          {% if user.is_authenticated %}
+          <a
+            href="{% url 'booking' route.pk schedule.pk %}"
+            type="button"
+            class="btn btn-outline-success btn-sm mx-1"
+            >Book Now</a
+          >
+          {% else %}
+
+          <button
+            type="button"
+            class="btn btn-outline-success btn-sm mx-1"
+            data-bs-toggle="modal"
+            data-bs-target="#loginModal"
+          >
+            Book Now
+          </button>
+          {% endif %}
+        </td>
+        <td>{{schedule.total_available_seats_on_flight}}</td>
+        <td>{{schedule.route.departure_location}}</td>
+        <td>{{schedule.route.arrival_location}}</td>
+        <td>{{schedule.source_departure_datetime}}</td>
+        <td>{{schedule.destination_arrival_datetime}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-dark" role="alert">No Schedule</div>
+  {% endif %} {% endblock body %}
+</div>

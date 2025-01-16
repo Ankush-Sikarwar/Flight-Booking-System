@@ -1,0 +1,8 @@
+.input-group {
+  width: auto;
+}
+
+.span-center {
+  display: inline-flex;
+  align-items: center;
+}

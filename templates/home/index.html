@@ -1,0 +1,30 @@
+{% comment %} {% extends 'base.html' %}  {% endcomment %}
+{% load static %}
+{% include 'base.html' %}
+
+{% comment %} {% block homeactive %} active {% endblock homeactive %}
+{% else %} {% endcomment %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Flight Booking System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="{% static "css/personalModal.css" %}">
+    <link rel="stylesheet" href="{% static "css/styles.css" %}" />
+  </head>
+ 
+    {% block body %}
+      {% include 'home/search.html' %}
+    
+    <footer>© Flight Booking System</footer>
+    {% endblock body %}
+
+
+  
+    <script type="text/javascript" src="{% static "js/script.js" %}"></script> 
+</html>
+

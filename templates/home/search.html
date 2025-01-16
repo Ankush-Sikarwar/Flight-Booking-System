@@ -1,0 +1,80 @@
+{% load static %} 
+<head>
+<link rel="stylesheet" href="{% static "css/filter.css" %}" />
+  </head>
+  <div class="main-container">
+  <form class="row gy-2 gx-3 justify-content-center" action="{% url 'search' %}">
+    <div class="col-auto input-group">
+      <input type="text" class="visually-hidden" name="q" value="{{ query }}">
+      <input type="text" aria-label="From" class="form-control" name="source_location" value="{{ source_location }}" placeholder="From">
+      <span class="span-center mx-2">&#8644;</span>
+      <input type="text" aria-label="To" class="form-control" name="destination_location" value="{{ destination_location }}" placeholder="To">
+    </div>
+    <div class="col-auto d-inline-flex">
+      <label class="visually-hidden" for="start_date">Start Date</label>
+      <input type="date"  class="form-control mx-2" id="autoSizingInput" name="start_date" value="{{ start_date }}" placeholder="Start Date">
+      <label class="visually-hidden" for="end_date">End Date</label>
+      <input type="date" class="form-control mx-" id="autoSizingInput" name="end_date" value="{{ end_date }}" placeholder="End Date">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+
+
+
+{% if AllSchedules %}
+
+  <table class="table mt-5">
+    <tbody>
+      <thead>
+        <tr>
+          <th scope="col">sno</th>
+          <th scope="col">Flight</th>
+          <th scope="col">Book</th>
+          <th scope="col">Available Seat</th>
+          <th scope="col">Departure</th>
+          <th scope="col">Arrival</th>
+          <th scope="col">Departure Time</th>
+          <th scope="col">Arrival Time</th>
+        </tr>
+      </thead>
+      {% for schedule in AllSchedules %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{schedule.flight}}</td>
+
+        <td>
+          {% if user.is_authenticated %}
+          {% if schedule.route and schedule.pk %}
+          <a href="{% url 'booking' route_id=schedule.route.pk schedule_id=schedule.pk %}" type="button" class="btn btn-outline-success btn-sm mx-1">Book Now</a>
+            {% else %}
+              <!-- Handle the case where either route or schedule is not available -->
+              <p>Booking details not available</p>
+        {% endif %}
+          {% else %}
+
+          <button
+            type="button"
+            class="btn btn-outline-success btn-sm mx-1"
+            data-bs-toggle="modal"
+            data-bs-target="#loginModal"
+          >
+            Book Now
+          </button>
+          {% endif %}
+        </td>
+        <td>{{schedule.total_available_seats_on_flight}}</td>
+        <td>{{schedule.route.departure_location}}</td>
+        <td>{{schedule.route.arrival_location}}</td>
+        <td>{{schedule.source_departure_datetime}}</td>
+        <td>{{schedule.destination_arrival_datetime}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-dark" role="alert">No Schedule</div>
+  {% endif %}
+</div>
+    <script type="text/javascript" src="{% static "js/filter.js" %}"></script> 

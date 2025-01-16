@@ -1,0 +1,55 @@
+
+{% load static %}
+
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Sign up</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action='{% url 'handelSingup' %}' method='post'>
+                <div class="form-group">
+                  <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username Should be Unique">
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" for="email" name="email" placeholder="Enter your Email">
+                  </div>
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name"
+                        autocomplete="fname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name"
+                        autocomplete="lname" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone</label>
+                    <input type="text" class="form-control"  id="phone_number" name="phone_number" placeholder="Phone Number with country code (eg: +91)"
+                        autocomplete="lname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pass1">Choose Password</label>
+                    <input type="password" class="form-control" id="pass1" name="pass1"
+                        placeholder="Enter your password" autocomplete="pass1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pass2">Confirm Password</label>
+                    <input type="password" class="form-control" id="pass2" name="pass2"
+                        placeholder="Enter your password again" autocomplete="pass2" required>
+                </div>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

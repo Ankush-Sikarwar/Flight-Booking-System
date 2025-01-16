@@ -1,0 +1,40 @@
+
+{% load static %}
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Log in</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action='{% url 'handleLogin' %}' method='post'>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input type="text" class="form-control" id="loginusername" name="loginusername"
+                        placeholder="Enter your email" autocomplete="loginusername" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pass">Password</label>
+                    <input type="password" class="form-control" id="loginpassword" name="loginpassword"
+                        placeholder="Enter your password " autocomplete="loginpassword" required>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a class="login-links" href= "{% url 'password_reset' %}">Forgot Password?</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a class="login-links" href="" data-toggle="modal" data-target="#singupModal">Don't Have an Account?</a>
+                    </li>
+                    <li class="list-group-item">
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </li>                       
+                </ul>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

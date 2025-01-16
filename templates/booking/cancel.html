@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Cancel Booking {% endblock title %} 
+
+{% block body %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="mb-4">Cancel Booking</h1>
+      <div class="card">
+        <div class="card-header">
+          Booking Details
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Booking ID: {{ booking.id }}</h5>
+          <p class="card-text">Flight: {{ booking.schedule.flight }}<br>
+            Travel Date: {{ booking.travel_date }}<br>
+            Seats: 
+            {% for seat in booking.seats.all %}
+            {{ seat.seat_number }}-{{ seat.category}}
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+          <p class="card-text">Refund Amount: {{ booking.amount }}</p>
+        </div>
+      </div>
+      <p></p>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="bank_name" class="form-label">Bank Name</label>
+          <input type="text" class="form-control" id="bank_name" name="bank_name" required>
+        </div>
+        <div class="mb-3">
+          <label for="account_number" class="form-label">Account Number</label>
+          <input type="text" class="form-control" id="account_number" name="account_number" required>
+        </div>
+        <div class="mb-3">
+          <label for="ifsc_code" class="form-label">IFSC Code</label>
+          <input type="text" class="form-control" id="ifsc_code" name="ifsc_code" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock body %}

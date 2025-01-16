@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tz %}
+{% block title %} All Bookings {% endblock title %} 
+{% block body %}
+{% if user.is_authenticated %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="mb-4">All Bookings</h1>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">sno</th>
+            <th>Booking ID</th>
+            <th>User</th>
+            <th>Flight Number</th>
+            <th>Date</th>
+            <th>Seat Number</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for booking in allBookings %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.user }}</td>
+            <td>{{ booking.schedule.flight }}</td>
+            <td>{{ booking.travel_date }}</td>
+            <td>
+                {% for seat in booking.seats.all %}
+                {{ seat.seat_number }} - {{seat.flight_class}} -{{ seat.category}}
+                {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ booking.status }}</td>
+            <td>
+              {% comment %} {% if current_time < booking.travel_date and current_time < stop.departure_time %} {% endcomment %}
+
+                {% if booking.status == "confirmed" %}
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal{{ booking.id }}">
+                  Cancel
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="cancelModal{{ booking.id }}" tabindex="-1" aria-labelledby="cancelModalLabel{{ booking.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="cancelModalLabel{{ booking.id }}">Cancel Booking</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to cancel this booking?
+                      </div>
+                      <div class="modal-footer">
+                        <form action="{% url 'cancelBooking' booking.pk %}" method="POST">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger">Yes, cancel</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, keep</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% else %}
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#PayModal{{ booking.id }}">
+                  Pay
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="PayModal{{ booking.id }}" tabindex="-1" aria-labelledby="PayModalLabel{{ booking.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="PayModalLabel{{ booking.id }}">Pay Booking</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to Pay this booking?
+                      </div>
+                      <div class="modal-footer">
+                        <form action="{% url 'makePayment' booking.pk %}" method="POST">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-warning">Yes, Pay</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, keep</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+            {% comment %} {% else %}
+                Journey Ended
+            {% endif %} {% endcomment %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7">No bookings found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<p class="text-center p-5 m-5">
+  404 Not Found please
+  <button
+  type="button"
+  class="btn btn-outline-success btn-sm mx-1"
+  data-bs-toggle="modal"
+  data-bs-target="#loginModal"
+>
+  Login
+</button>
+</p>
+{% endif %}
+
+{% endblock body %}
